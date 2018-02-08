@@ -42,7 +42,7 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
-          cacheDirectory: true
+          compact: true
         }
       },
       {

@@ -1,15 +1,64 @@
 # example01
 Client와 Server 혼합 환경 개발 기본 설정
 - webpack
-  - webpack-dev-middleware
-  - webpack-hot-middleware
 - nodejs
   - express
+- html
+  - html-webpack-plugin
+- javascript
+- eslint
+  - eslint
+  - eslint-loader
+  - eslint-plugin-import
+  - eslint-plugin-node
+  - eslint-plugin-promise
+  - eslint-config-airbnb-base (airbnb)
+- babel
+  - babel-loader
+  - babel-core
+  - babel-preset-env
+- css
+  - style-loader
+  - css-loader
+  - extract-text-webpack-plugin
+  - postcss
+- sass
+  - sass-loader
+  - node-sass
+- image
+  - file-loader
+  - url-loader
+- menifest
 
-# example02 (에정)
-Client와 Server 혼합 환경 개발 기본 설정
+# example02
+example01 + (es6 template를 이용하여 Client와 Server 함꼐 사용하기)
 - webpack
-  - webpack-dev-server
-  - webpack-hot-server
 - nodejs
   - express
+  - express-es6-template-engine
+- html
+  - html-webpack-plugin
+- javascript
+- eslint
+  - eslint
+  - eslint-loader
+  - eslint-plugin-import
+  - eslint-plugin-node
+  - eslint-plugin-promise
+  - eslint-config-airbnb-base (airbnb)
+- babel
+  - babel-loader
+  - babel-core
+  - babel-preset-env
+- css
+  - style-loader
+  - css-loader
+  - extract-text-webpack-plugin
+  - postcss
+- sass
+  - sass-loader
+  - node-sass
+- image
+  - file-loader
+  - url-loader
+- menifest

@@ -7,8 +7,20 @@
     "start": "webpack --config webpack.config.dev.js -w",
     "build": "webpack --config webpack.config.prod.js -p"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "webpack",
+    "nodejs",
+    "html",
+    "javascript",
+    "eslint",
+    "babel",
+    "css",
+    "postcss",
+    "sass",
+    "image",
+    "manifest"
+  ],
+  "author": "jakejoo",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.2",
