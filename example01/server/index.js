@@ -1,22 +1,18 @@
+const path = require('path');
 const express = require('express');
+
 const app = express();
 
 app.use(express.static('client/dist'));
 
-if (process.env.NODE_ENV === 'development') {
-  const webpack = require('webpack');
-  const webpackConfig = require('../webpack.config.dev');
-  const webpackMiddleware = require("webpack-dev-middleware");
-  const webpackHotMiddleware = require("webpack-hot-middleware");
+app.get('/', (req, res) => {
+  res.sendFile(path.join(`${__dirname}/../client/dist/home.html`));
+});
 
-  const webpackCompiler = webpack(webpackConfig);
-  const wpmw = webpackMiddleware(webpackCompiler, {});
-  app.use(wpmw);
-
-  const wphmw = webpackHotMiddleware(webpackCompiler);
-  app.use(wphmw);
-}
+app.get('/about', (req, res) => {
+  res.sendFile(path.join(`${__dirname}/../client/dist/about.html`));
+});
 
 app.listen(3000, () => {
-  console.log('Example app listening on port 3000!')
+  console.log('Example app listening on port 3000!');
 });

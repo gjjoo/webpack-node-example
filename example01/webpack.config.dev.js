@@ -1,16 +1,16 @@
 const path = require('path');
-const webpack = require('webpack');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const autoprefixer = require('autoprefixer');
+const postcssFlexbugsFixes = require('postcss-flexbugs-fixes');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 
 module.exports = {
   devtool: 'cheap-module-source-map',
   entry: {
-    app: [
-      'webpack-hot-middleware/client?reload=true',
-      './client/src/index.js'
-    ]
+    home: './client/src/scripts/home.js',
+    about: './client/src/scripts/about.js'
   },
   output: {
     path: path.resolve(__dirname, 'client/dist'),
@@ -19,42 +19,53 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.js$/,
+        enforce: 'pre',
+        exclude: /node_modules/,
+        loader: 'eslint-loader'
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        options: {
+          cacheDirectory: true
+        }
+      },
+      {
         test: /\.scss$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1,
-              sourceMap: true
-            }
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              ident: 'postcss',
-              plugins: () => [
-                require('postcss-flexbugs-fixes'),
-                autoprefixer({
-                  browsers: [
-                    '>1%',
-                    'last 4 versions',
-                    'Firefox ESR',
-                    'not ie < 9',
-                  ],
-                  flexbox: 'no-2009',
-                }),
-              ],
-              sourceMap: true
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 1
+              }
             },
-          },
-          {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: true
+            {
+              loader: 'postcss-loader',
+              options: {
+                ident: 'postcss',
+                plugins: () => [
+                  postcssFlexbugsFixes,
+                  autoprefixer({
+                    browsers: [
+                      '>1%',
+                      'last 4 versions',
+                      'Firefox ESR',
+                      'not ie < 9'
+                    ],
+                    flexbox: 'no-2009'
+                  })
+                ]
+              }
+            },
+            {
+              loader: 'sass-loader'
             }
-          }
-        ]
+          ]
+        })
       },
       {
         test: /\.(png|jpg|gif)$/,
@@ -63,7 +74,7 @@ module.exports = {
             loader: 'url-loader',
             options: {
               limit: 10000,
-              name: 'static/media/[name].[hash:8].[ext]',
+              name: 'static/media/[name].[hash:8].[ext]'
             }
           }
         ]
@@ -71,11 +82,22 @@ module.exports = {
     ]
   },
   plugins: [
+    new CleanWebpackPlugin(['client/dist']),
     new HtmlWebpackPlugin({
       inject: true,
-      template: './client/src/index.html'
+      chunks: ['home'],
+      template: './client/src/home.html',
+      filename: 'home.html'
     }),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new HtmlWebpackPlugin({
+      inject: true,
+      chunks: ['about'],
+      template: './client/src/about.html',
+      filename: 'about.html'
+    }),
+    new ExtractTextPlugin('static/css/[name].[contenthash:8].css'),
+    new ManifestPlugin({
+      fileName: 'asset-manifest.json'
+    })
   ]
 };
