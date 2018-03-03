@@ -3,7 +3,7 @@ import '../styles/home.scss';
 
 import MySharedTemplate from './shared/my-shared-template';
 
-const templateData = { name: 'Jake', age: 34 };
+const templateData = { name: 'Jake', age: 31 };
 document.body.insertAdjacentHTML('beforeend', MySharedTemplate(templateData));
 
 function componentImage() {
